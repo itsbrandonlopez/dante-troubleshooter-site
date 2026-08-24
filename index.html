@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dante Troubleshooter — The panic button for Dante audio networks</title>
+<meta name="description" content="Guided troubleshooting and real diagnostics for Dante audio networks. Six scenarios, 48 screens, zero condescension. For when the show is on the line.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' fill='%23e9ff4f' text-anchor='middle'%3EDT%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #000;
+    --ink: #fff;
+    --muted: rgba(255, 255, 255, 0.62);
+    --faint: rgba(255, 255, 255, 0.4);
+    --hairline: rgba(255, 255, 255, 0.28);
+    --accent: #e9ff4f;
+    --mono: ui-monospace, "SF Mono", Menlo, Monaco, "Courier New", monospace;
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent); color: #000; }
+  a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap {
+    width: min(100% - clamp(48px, 9vw, 160px), 1400px);
+    margin-inline: auto;
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+
+  section { padding-bottom: clamp(64px, 9vw, 130px); }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .section-head h2 {
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+  }
+
+  .section-head p {
+    max-width: 300px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  /* ---------- topbar / hero ---------- */
+
+  header.hero { min-height: 92svh; display: flex; flex-direction: column; padding-block: 28px 36px; }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .topbar a:hover { color: var(--accent); }
+
+  .hero h1 {
+    margin: auto 0;
+    font-size: clamp(2.8rem, 8.5vw, 8rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+    max-width: 16ch;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+
+  .hero .sub {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero .sub p {
+    max-width: 440px;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .cta {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 16px 26px;
+    background: var(--accent);
+    color: #000;
+    transition: transform 0.15s ease;
+    white-space: nowrap;
+  }
+  .cta:hover { transform: translateY(-2px); }
+  .cta::after { content: "\2197"; margin-left: 10px; }
+
+  /* ---------- feature grid ---------- */
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    margin-top: 56px;
+  }
+
+  .cell {
+    min-height: 360px;
+    padding: 28px 26px;
+    border-right: 1px solid var(--hairline);
+    display: flex;
+    flex-direction: column;
+  }
+  .cell:last-child { border-right: none; }
+
+  .cell .status { display: flex; justify-content: space-between; gap: 12px; }
+  .cell .status i { font-style: normal; color: var(--faint); }
+
+  .cell h3 {
+    margin: auto 0 14px;
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .cell p { font-size: 0.95rem; line-height: 1.55; color: var(--muted); margin-bottom: 18px; }
+
+  .cell ul { list-style: none; }
+  .cell li {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--muted);
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .cell li::before { content: "—"; position: absolute; left: 0; color: var(--faint); }
+
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+    .cell { border-right: none; border-bottom: 1px solid var(--hairline); min-height: 0; }
+    .cell:last-child { border-bottom: none; }
+  }
+
+  /* ---------- audience ---------- */
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 56px;
+  }
+  .two-col h3 { font-size: 1.3rem; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 18px; }
+  .two-col ul { list-style: none; }
+  .two-col li {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--muted);
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .two-col li::before { content: "—"; position: absolute; left: 0; color: var(--faint); }
+  .not-for h3 { color: var(--muted); }
+  .not-for li::before { content: "×"; }
+
+  @media (max-width: 800px) {
+    .two-col { grid-template-columns: 1fr; gap: 24px; }
+    .section-head { flex-direction: column; gap: 14px; }
+  }
+
+  /* ---------- install ---------- */
+
+  .steps { counter-reset: step; margin-top: 56px; border-top: 1px solid var(--hairline); }
+  .step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 28px;
+    padding: 26px 20px;
+    border-bottom: 1px solid var(--hairline);
+    align-items: baseline;
+  }
+  .step::before {
+    counter-increment: step;
+    content: "0" counter(step);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--faint);
+  }
+  .step p { font-size: 1rem; line-height: 1.55; color: var(--muted); }
+  .step p strong { color: var(--ink); font-weight: 500; }
+  .step code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--ink);
+  }
+
+  @media (max-width: 640px) {
+    .wrap { width: min(100% - 40px, 1400px); }
+    .step { grid-template-columns: 1fr; gap: 8px; padding: 22px 14px; }
+  }
+
+  /* ---------- fine print / footer ---------- */
+
+  .fine {
+    max-width: 720px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--faint);
+    margin-top: 48px;
+  }
+
+  footer { padding-bottom: 40px; }
+  .foot-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+    flex-wrap: wrap;
+  }
+  .foot-row .links { display: flex; gap: 24px; }
+  .foot-row a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <div class="topbar">
+    <span class="label">Dante Troubleshooter</span>
+    <a class="label" href="https://itsbrandonlopez.github.io/personal-site/">Brandon Lopez</a>
+  </div>
+  <h1>The panic button for <em>Dante</em> networks.</h1>
+  <div class="sub">
+    <p>Guided troubleshooting and real network diagnostics for the moment everything goes quiet 40 minutes before doors. No decision-tree flowchart. No "consult your administrator." Just: here's what we found, here's what it means, here's your next move.</p>
+    <a class="cta" href="https://github.com/itsbrandonlopez/dante-troubleshooter/releases/latest">Download for Mac</a>
+  </div>
+</header>
+
+<section class="wrap" aria-labelledby="inside-h">
+  <div class="section-head">
+    <h2 id="inside-h">What's inside.</h2>
+    <p>Six failure modes. Forty-eight screens. Zero forum spelunking.</p>
+  </div>
+  <div class="grid">
+
+    <div class="cell">
+      <div class="status"><span class="label">01</span><i>Guided fixes</i></div>
+      <h3>Walkthroughs that explain the why.</h3>
+      <p>Pick your symptom, run the diagnostics, move forward one step at a time:</p>
+      <ul>
+        <li>Can't see Dante devices</li>
+        <li>Clock sync problems</li>
+        <li>Routing &amp; audio dropouts</li>
+        <li>DVS &amp; recording rigs</li>
+        <li>Redundant networks sharing one switch</li>
+        <li>Firmware panics &amp; stuck updates</li>
+      </ul>
+    </div>
+
+    <div class="cell">
+      <div class="status"><span class="label">02</span><i>Real diagnostics</i></div>
+      <h3>Not a checklist PDF.</h3>
+      <p>The app actually talks to your network:</p>
+      <ul>
+        <li>Full subnet scan in ~5 seconds — IP, MAC, vendor, hostname</li>
+        <li>mDNS discovery scan, same mechanism as Dante Controller</li>
+        <li>Isolation check for Wi-Fi, VPNs, dual-homed machines</li>
+        <li>Ping &amp; UDP port probes with honest results</li>
+        <li>Subnet comparator — can these two IPs even see each other?</li>
+      </ul>
+    </div>
+
+    <div class="cell">
+      <div class="status"><span class="label">03</span><i>Field knowledge</i></div>
+      <h3>Brand quirks, baked in.</h3>
+      <p>The manufacturer gotchas that never make it into the manual:</p>
+      <ul>
+        <li>Yamaha CL/QL clocking defaults &amp; Console IDs</li>
+        <li>Allen &amp; Heath clock-chain rules &amp; static IP traps</li>
+        <li>DiGiCo DMI counts at 96k, Orange Box hierarchy</li>
+        <li>d&amp;B DS100 failsafe LEDs — why amps never appear</li>
+        <li>NEXO NXDT104 card requirement</li>
+      </ul>
+    </div>
+
+    <div class="cell">
+      <div class="status"><span class="label">04</span><i>Escalation</i></div>
+      <h3>Reports that make you look organized.</h3>
+      <p>Every diagnostic gets logged with timestamps. When you finally have to call someone, hit Copy Report and paste the whole session into your ticket.</p>
+      <p>Vendor support will think you're organized. You're not. You just have this app.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="wrap" aria-labelledby="who-h">
+  <div class="section-head">
+    <h2 id="who-h">Who it's for.</h2>
+    <p>Honest scope beats inflated claims.</p>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>For:</h3>
+      <ul>
+        <li>A1s and system techs who know what a subnet mask is but don't want to derive it under pressure</li>
+        <li>The junior tech you handed the network to, who needs the why explained without condescension</li>
+        <li>Anyone who has ever power-cycled a stage rack at intermission and prayed</li>
+      </ul>
+    </div>
+    <div class="not-for">
+      <h3>Not for:</h3>
+      <ul>
+        <li>Network engineers who enjoy suffering</li>
+        <li>People whose answer is "just use Dante Domain Manager" — it isn't helpful in a field scenario, and we both know it</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" aria-labelledby="install-h">
+  <div class="section-head">
+    <h2 id="install-h">Install.</h2>
+    <p>Apple Silicon Mac, macOS 12 or later.</p>
+  </div>
+  <div class="steps">
+    <div class="step"><p><strong>Grab the latest zip</strong> from the <a href="https://github.com/itsbrandonlopez/dante-troubleshooter/releases/latest" style="color:var(--accent)">releases page</a>.</p></div>
+    <div class="step"><p>Unzip and drag <strong>Dante Troubleshooter.app</strong> to Applications.</p></div>
+    <div class="step"><p>First launch: macOS will complain we're unsigned — like all the best touring crews. Right-click → Open → Open, or approve via System Settings → Privacy &amp; Security → <strong>Open Anyway</strong>. One time only.</p></div>
+    <div class="step"><p><strong>Plug into the network</strong> and pick your symptom. Doors are in 40 minutes. You've got this.</p></div>
+  </div>
+  <p class="fine">Dante Troubleshooter is an independent tool and is not affiliated with, endorsed by, or sponsored by Audinate, Yamaha, Allen &amp; Heath, DiGiCo, d&amp;B audiotechnik, NEXO, or anyone else whose gear has ever ruined your day. Dante is a trademark of Audinate Pty Ltd. Your switch's IGMP snooping misconfiguration is not our fault — but it is now diagnosable.</p>
+</section>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <span class="label">&copy; 2026 Brandon Lopez</span>
+    <div class="links">
+      <a class="label" href="mailto:hi@brandon-lopez.com?subject=Dante%20Troubleshooter">hi@brandon-lopez.com</a>
+      <a class="label" href="https://github.com/itsbrandonlopez/dante-troubleshooter">GitHub</a>
+      <a class="label" href="https://itsbrandonlopez.github.io/personal-site/">Home</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
