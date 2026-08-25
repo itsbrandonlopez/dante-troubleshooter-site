@@ -16,7 +16,7 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-REPO = "itsbrandonlopez/dante-troubleshooter-site"
+REPO = "itsbrandonlopez/dante-troubleshooter"
 API = f"https://api.github.com/repos/{REPO}/releases?per_page=30"
 SITE_URL = "https://dante.brandon-lopez.com/changelog/"
 OUT = Path(__file__).resolve().parent.parent / "changelog" / "index.html"
@@ -75,18 +75,31 @@ def fmt_date(iso: str) -> str:
     return dt.strftime("%b %-d, %Y")
 
 
+def get_token() -> str:
+    # Locally: `export GH_TOKEN=$(gh auth token)` works well.
+    # In Actions: pass a PAT with read access to REPO as the GITHUB_TOKEN env.
+    return os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
+
+
 def fetch_releases() -> list:
     headers = {
         "Accept": "application/vnd.github+json",
         "User-Agent": "changelog-builder",
     }
-    token = os.environ.get("GITHUB_TOKEN")
+    token = get_token()
     if token:
         headers["Authorization"] = f"Bearer {token}"
     try:
         req = urllib.request.Request(API, headers=headers)
         with urllib.request.urlopen(req, timeout=30) as r:
             return json.load(r)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            raise SystemExit(
+                f"GitHub returned 404 for {REPO}. If the repo is private, "
+                "set GITHUB_TOKEN (or GH_TOKEN) to a token with read access."
+            )
+        raise
     except (urllib.error.URLError, OSError):
         # Some local Python installs (macOS python.org builds) lack CA certs;
         # fall back to curl so the script still works locally.
