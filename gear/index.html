@@ -59,8 +59,15 @@
 
   header.hero { min-height: 46svh; display: flex; flex-direction: column; padding-block: 28px 36px; }
 
-  .topbar { display: flex; justify-content: space-between; align-items: baseline; }
-  .topbar nav { display: flex; gap: 24px; }
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 14px 24px;
+  }
+  .topbar nav { display: flex; align-items: center; gap: 24px; }
+  .nav-divider { width: 1px; height: 14px; background: var(--hairline); }
   .topbar a:hover { color: var(--accent); }
 
   .hero h1 {
@@ -188,7 +195,7 @@
   .foot-row a:hover { color: var(--accent); }
 
   @media (max-width: 800px) {
-    .topbar nav { display: none; }
+    .topbar { flex-direction: column; align-items: flex-start; gap: 16px; }
     .cell { border-right: none; }
     .section-head { flex-direction: column; gap: 14px; }
   }
@@ -199,9 +206,10 @@
 <header class="hero wrap">
   <div class="topbar">
     <a class="label" href="/">Dante Troubleshooter</a>
-    <nav class="label" style="align-items:center;">
+    <nav class="label">
+      <a href="/gear/">Gear coverage</a>
       <a href="/faq/">FAQ</a>
-      <span style="width:1px; height:14px; background:var(--hairline);"></span>
+      <span class="nav-divider"></span>
       <a href="https://itsbrandonlopez.github.io/personal-site/">Made by Brandon</a>
     </nav>
   </div>

@@ -106,7 +106,11 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    flex-wrap: wrap;
+    gap: 14px 24px;
   }
+  .topbar nav { display: flex; align-items: center; gap: 24px; }
+  .nav-divider { width: 1px; height: 14px; background: var(--hairline); }
   .topbar a:hover { color: var(--accent); }
 
   .hero h1 {
@@ -256,7 +260,7 @@
   @media (max-width: 640px) {
     .wrap { width: min(100% - 40px, 1400px); }
     .step { grid-template-columns: 1fr; gap: 8px; padding: 22px 14px; }
-    .topbar nav { display: none; }
+    .topbar { flex-direction: column; align-items: flex-start; gap: 16px; }
   }
 
   /* ---------- fine print / footer ---------- */
@@ -288,16 +292,16 @@
 <header class="hero wrap">
   <div class="topbar">
     <a class="label" href="/">Dante Troubleshooter</a>
-    <nav class="label" style="display:flex; align-items:center; gap:24px;">
+    <nav class="label">
       <a href="/gear/">Gear coverage</a>
       <a href="/faq/">FAQ</a>
-      <span style="width:1px; height:14px; background:var(--hairline);"></span>
+      <span class="nav-divider"></span>
       <a href="https://itsbrandonlopez.github.io/personal-site/">Made by Brandon</a>
     </nav>
   </div>
   <h1>The panic button for <em>Dante</em> networks.</h1>
   <div class="sub">
-    <p>Guided troubleshooting and real network diagnostics for the moment everything goes quiet 40 minutes before doors. Missing devices, broken clocking, mystery dropouts — diagnosed in minutes. No decision-tree flowchart. No "consult your administrator." Just: here's what we found, here's what it means, here's your next move.</p>
+    <p>Missing devices, broken clocking, mystery dropouts — diagnosed in minutes. Here's what we found, here's what it means, here's your next move.</p>
     <a class="cta" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg" download>Download for Mac</a>
   </div>
 </header>
