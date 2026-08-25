@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog — Dante Troubleshooter Release Notes</title>
+<meta name="description" content="Every Dante Troubleshooter release, straight from GitHub: new walkthroughs, diagnostics, and gear knowledge base updates.">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://dante.brandon-lopez.com/changelog/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dante Troubleshooter">
+<meta property="og:title" content="Dante Troubleshooter Changelog">
+<meta property="og:description" content="Every release, straight from GitHub. New walkthroughs, diagnostics, and gear knowledge with each version.">
+<meta property="og:url" content="https://dante.brandon-lopez.com/changelog/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dante Troubleshooter Changelog">
+<meta name="twitter:description" content="Every release, straight from GitHub.">
+
+<style>
+  :root {
+    --bg: #000;
+    --ink: #fff;
+    --muted: rgba(255, 255, 255, 0.62);
+    --faint: rgba(255, 255, 255, 0.4);
+    --hairline: rgba(255, 255, 255, 0.28);
+    --accent: #38bdf8;
+    --mono: ui-monospace, "SF Mono", Menlo, Monaco, "Courier New", monospace;
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent); color: #000; }
+  a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap {
+    width: min(100% - clamp(48px, 9vw, 160px), 1400px);
+    margin-inline: auto;
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+
+  header.hero { min-height: 46svh; display: flex; flex-direction: column; padding-block: 28px 36px; }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 14px 24px;
+  }
+  .topbar nav { display: flex; align-items: center; gap: 24px; }
+  .nav-divider { width: 1px; height: 14px; background: var(--hairline); }
+  .topbar a:hover { color: var(--accent); }
+
+  .hero h1 {
+    margin: auto 0;
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+    max-width: 20ch;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p.sub {
+    max-width: 560px;
+    margin-top: 28px;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .releases { border-top: 1px solid var(--hairline); margin-top: 48px; max-width: 900px; }
+
+  .release { padding: 34px 20px; border-bottom: 1px solid var(--hairline); }
+
+  .release-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .release-head h2 {
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+  }
+  .release-head time {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .release-body { font-size: 1rem; line-height: 1.6; color: var(--muted); }
+  .release-body p { margin-bottom: 12px; }
+  .release-body p:last-child { margin-bottom: 0; }
+  .release-body strong { color: var(--ink); font-weight: 500; }
+  .release-body code { font-family: var(--mono); font-size: 0.85em; color: var(--ink); }
+  .release-body ul { list-style: none; }
+  .release-body li {
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .release-body li::before { content: "\2014"; position: absolute; left: 0; color: var(--faint); }
+  .release-body h3 {
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 18px 0 10px;
+  }
+  .release-body h3:first-child { margin-top: 0; }
+  .release-body a:hover { color: var(--accent); }
+
+  footer { padding-block: 64px 40px; }
+  .foot-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+    flex-wrap: wrap;
+  }
+  .foot-row .links { display: flex; gap: 24px; }
+  .foot-row a:hover { color: var(--accent); }
+
+  @media (max-width: 800px) {
+    .topbar { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .release { padding: 26px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <div class="topbar">
+    <a class="label" href="/">Dante Troubleshooter</a>
+    <nav class="label">
+      <a href="/gear/">Gear coverage</a>
+      <a href="/faq/">FAQ</a>
+      <span class="nav-divider"></span>
+      <a href="https://itsbrandonlopez.github.io/personal-site/">Made by Brandon</a>
+    </nav>
+  </div>
+  <h1>What's <em>new.</em></h1>
+  <p class="sub">Every release, straight from the source. No marketing gloss — what shipped, what got fixed.</p>
+</header>
+
+<main class="wrap" aria-label="Release history">
+  <div class="releases">
+<article class="release">
+  <div class="release-head"><h2>v0.2.0</h2><time datetime="2026-08-25T16:30:55Z">Aug 25, 2026</time></div>
+  <div class="release-body">
+<p>v0.2.0</p>
+  </div>
+</article>
+<article class="release">
+  <div class="release-head"><h2>v0.1.1</h2><time datetime="2026-08-25T00:01:16Z">Aug 25, 2026</time></div>
+  <div class="release-body">
+<p>New: switch and device knowledge base — Netgear, Cisco, UniFi, Yamaha, Luminex, Q-SYS, Midas, Shure.</p>
+  </div>
+</article>
+<article class="release">
+  <div class="release-head"><h2>v0.1.0</h2><time datetime="2026-08-24T23:27:42Z">Aug 24, 2026</time></div>
+  <div class="release-body">
+<p>First public release. Free to use — tips appreciated.</p>
+  </div>
+</article>
+  </div>
+</main>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <span class="label">Dante Troubleshooter &middot; &copy; 2026 Brandon Lopez</span>
+    <div class="links">
+      <a class="label" href="https://buttondown.com/itsbrandonlopez">Release updates</a>
+      <a class="label" href="mailto:hi@brandon-lopez.com?subject=Dante%20Troubleshooter">hi@brandon-lopez.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

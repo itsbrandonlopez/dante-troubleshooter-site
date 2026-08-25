@@ -1,0 +1,33 @@
+name: Build changelog
+
+on:
+  release:
+    types: [published]
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bake releases into changelog page
+        run: python3 scripts/build_changelog.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "changelog-bot"
+          git config user.email "actions@users.noreply.github.com"
+          if [[ -n "$(git status --porcelain changelog/index.html)" ]]; then
+            git add changelog/index.html
+            git commit -m "Rebuild changelog from latest releases"
+            git pull --rebase --autostash origin main
+            git push
+          else
+            echo "Changelog unchanged"
+          fi
