@@ -16,7 +16,7 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-REPO = "itsbrandonlopez/dante-troubleshooter"
+REPO = "itsbrandonlopez/dante-troubleshooter-site"
 API = f"https://api.github.com/repos/{REPO}/releases?per_page=30"
 SITE_URL = "https://dante.brandon-lopez.com/changelog/"
 OUT = Path(__file__).resolve().parent.parent / "changelog" / "index.html"
