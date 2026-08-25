@@ -153,6 +153,24 @@
   .cta:hover { transform: translateY(-2px); }
   .cta::after { content: "\2193"; margin-left: 10px; }
 
+  .cta-alt {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+  .cta-alt:hover { color: var(--ink); }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
   /* ---------- feature grid ---------- */
 
   .grid {
@@ -302,7 +320,10 @@
   <h1>The panic button for <em>Dante</em> networks.</h1>
   <div class="sub">
     <p>Missing devices, broken clocking, mystery dropouts — diagnosed in minutes. Here's what we found, here's what it means, here's your next move.</p>
-    <a class="cta" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg" download>Download for Mac</a>
+    <div class="cta-row">
+      <a class="cta" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg" download>Download for Mac</a>
+      <a class="cta-alt" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-x64.dmg" download>Intel Mac</a>
+    </div>
   </div>
 </header>
 

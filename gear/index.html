@@ -181,6 +181,17 @@
   .cta:hover { transform: translateY(-2px); }
   .cta::after { content: "\2193"; margin-left: 10px; }
 
+  .cta-alt {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+  .cta-alt:hover { color: var(--ink); }
+
   footer { padding-bottom: 40px; }
   .foot-row {
     display: flex;
@@ -312,7 +323,10 @@
   <section aria-label="Download">
     <div class="endnote" style="display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;">
       <p style="max-width:520px; font-size:0.95rem; line-height:1.55; color:var(--muted);">Pick your symptom, run the diagnostics, get the quirk explained before doors.</p>
-      <a class="cta" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg" download>Download for Mac</a>
+      <div class="cta-row">
+        <a class="cta" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg" download>Download for Mac</a>
+        <a class="cta-alt" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-x64.dmg" download>Intel Mac</a>
+      </div>
     </div>
   </section>
 
