@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Dante Troubleshooter</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' fill='%2338bdf8' text-anchor='middle'%3EDT%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #000;
+    --ink: #fff;
+    --muted: rgba(255, 255, 255, 0.62);
+    --faint: rgba(255, 255, 255, 0.4);
+    --hairline: rgba(255, 255, 255, 0.28);
+    --accent: #38bdf8;
+    --mono: ui-monospace, "SF Mono", Menlo, Monaco, "Courier New", monospace;
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent); color: #000; }
+  a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap {
+    width: min(100% - clamp(48px, 9vw, 160px), 1400px);
+    margin-inline: auto;
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+
+  header.hero { min-height: 92svh; display: flex; flex-direction: column; padding-block: 28px 36px; }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 14px 24px;
+  }
+  .topbar nav { display: flex; align-items: center; gap: 24px; }
+  .nav-divider { width: 1px; height: 14px; background: var(--hairline); }
+  .topbar a:hover { color: var(--accent); }
+
+  .hero h1 {
+    margin: auto 0;
+    font-size: clamp(2.8rem, 8.5vw, 8rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+    max-width: 16ch;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+
+  .hero .sub {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero .sub p {
+    max-width: 440px;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .cta {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 16px 26px;
+    background: var(--accent);
+    color: #000;
+    transition: transform 0.15s ease;
+    white-space: nowrap;
+  }
+  .cta:hover { transform: translateY(-2px); }
+
+  footer { padding-bottom: 40px; }
+  .foot-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+    flex-wrap: wrap;
+  }
+  .foot-row a:hover { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .topbar { flex-direction: column; align-items: flex-start; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <div class="topbar">
+    <a class="label" href="/">Dante Troubleshooter</a>
+    <nav class="label">
+      <a href="/gear/">Gear coverage</a>
+      <a href="/faq/">FAQ</a>
+      <span class="nav-divider"></span>
+      <a href="/changelog/">Changelog</a>
+    </nav>
+  </div>
+  <h1>Device <em>not found.</em></h1>
+  <div class="sub">
+    <p>This page is missing from the network — probably an IGMP snooping issue. Check the subscription, or just head home.</p>
+    <div>
+      <a class="cta" href="/">Back to the site</a>
+    </div>
+  </div>
+</header>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <span class="label">Dante Troubleshooter &middot; &copy; 2026 Brandon Lopez</span>
+    <div class="links">
+      <a class="label" href="mailto:support@dantetroubleshooter.com">support@dantetroubleshooter.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
