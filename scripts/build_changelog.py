@@ -20,6 +20,7 @@ REPO = "itsbrandonlopez/dante-troubleshooter-site"
 API = f"https://api.github.com/repos/{REPO}/releases?per_page=30"
 SITE_URL = "https://dante.brandon-lopez.com/changelog/"
 OUT = Path(__file__).resolve().parent.parent / "changelog" / "index.html"
+INDEX = Path(__file__).resolve().parent.parent / "index.html"
 
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
 HEADING_RE = re.compile(r"#{1,6}\s+")
@@ -320,12 +321,31 @@ TEMPLATE = """<!DOCTYPE html>
 """
 
 
+def update_latest_version(tag: str) -> None:
+    text = INDEX.read_text(encoding="utf-8")
+    pattern = re.compile(r"Current release &middot; v[0-9][0-9A-Za-z.\-]*")
+    if not pattern.search(text):
+        print("WARNING: version badge not found on home page — leaving it untouched")
+        return
+    new = pattern.sub("Current release &middot; " + esc(tag), text)
+    if new != text:
+        INDEX.write_text(new, encoding="utf-8")
+        print(f"Updated home page version badge to {tag}")
+    else:
+        print(f"Home page version badge already {tag}")
+
+
 def main() -> None:
     releases = fetch_releases()
-    rendered = "\n".join(render_release(r) for r in releases)
+    # API returns newest first; skip drafts/prereleases so the badge and
+    # changelog only reflect stable releases.
+    stable = [r for r in releases if not r.get("draft") and not r.get("prerelease")]
+    rendered = "\n".join(render_release(r) for r in stable)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(TEMPLATE.replace("<!--RELEASES-->", rendered), encoding="utf-8")
-    print(f"Wrote {OUT} ({len(releases)} releases)")
+    print(f"Wrote {OUT} ({len(stable)} releases)")
+    if stable:
+        update_latest_version(stable[0]["tag_name"])
 
 
 if __name__ == "__main__":

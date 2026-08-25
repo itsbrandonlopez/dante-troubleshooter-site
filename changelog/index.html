@@ -176,13 +176,26 @@
 <article class="release">
   <div class="release-head"><h2>v0.3.0</h2><time datetime="2026-08-25T17:58:51Z">Aug 25, 2026</time></div>
   <div class="release-body">
-<p>v0.3.0</p>
+<h3>Added</h3>
+<ul>
+<li><strong>Windows support</strong>: first official Windows installer (x64 NSIS, assisted setup with configurable install directory, per-user install). All core diagnostics were rewired behind per-platform service modules — ping parsing now tolerates localized <code>ping</code> output, ARP table parsing handles multi-interface output and dashed MAC normalization, interfaces/gateway detection reads <code>route print</code> with junk-adapter filtering, and the subnet scanner runs through platform-dispatched ping/ARP</li>
+<li><strong>Automatic updates (macOS)</strong>: the app now checks GitHub's release feed ~5 seconds after launch using electron-updater. When a new version exists, a toast offers an in-app download with progress percentage, then restart-to-apply. Background check failures stay silent so offline users aren't nagged; manual retries surface errors. Disabled entirely in dev/unpackaged runs</li>
+<li>Update plumbing exposed to the UI over sandbox-safe IPC (<code>update:check</code> / <code>update:download</code> / <code>update:install</code> / status events), with differential (&quot;delta&quot;) downloads enabled by uploading <code>.blockmap</code> files alongside each zip</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li><strong>Release pipeline</strong>: mac DMG/zip artifacts renamed to stable per-arch names (<code>Dante-Troubleshooter-mac-arm64.zip</code>, etc.) so update metadata (<code>latest-mac.yml</code>) stays consistent between releases; publishing now also uploads the zips, blockmaps, and update metadata to each release automatically (<code>scripts/publish-updates.sh</code>)</li>
+</ul>
   </div>
 </article>
 <article class="release">
   <div class="release-head"><h2>v0.2.0</h2><time datetime="2026-08-25T16:30:55Z">Aug 25, 2026</time></div>
   <div class="release-body">
-<p>v0.2.0</p>
+<h3>Added</h3>
+<ul>
+<li><strong>Intel Mac support</strong>: releases now ship both Apple silicon (arm64) and Intel (x64) DMGs built separately (no universal binary), published together under one release with stable per-arch download permalinks so old download links never break</li>
+<li><strong>Per-screen <code>sources</code> field</strong> in scenario JSON: renders as a collapsed &quot;Sources&quot; footer on any troubleshooting screen, letting screens cite Audinate docs/vendor manuals inline. Sources accumulate across the session and are appended to Copy Report output (deduplicated), so tickets include the references the user actually saw. <code>lint:content</code> validates the shape and rejects non-http(s) URLs</li>
+</ul>
   </div>
 </article>
 <article class="release">
