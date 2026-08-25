@@ -311,7 +311,7 @@ TEMPLATE = """<!DOCTYPE html>
     <span class="label">Dante Troubleshooter &middot; &copy; 2026 Brandon Lopez</span>
     <div class="links">
       <a class="label" href="https://buttondown.com/itsbrandonlopez">Release updates</a>
-      <a class="label" href="mailto:hi@brandon-lopez.com?subject=Dante%20Troubleshooter">hi@brandon-lopez.com</a>
+      <a class="label" href="mailto:support@dantetroubleshooter.com">support@dantetroubleshooter.com</a>
     </div>
   </div>
 </footer>
