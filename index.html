@@ -3,9 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dante Troubleshooter — The panic button for Dante audio networks</title>
-<meta name="description" content="Guided troubleshooting and real diagnostics for Dante audio networks. Six scenarios, 48 screens, zero condescension. For when the show is on the line.">
+<title>Dante Troubleshooter — Fix Dante Network Problems Fast</title>
+<meta name="description" content="Guided troubleshooting and real diagnostics for Dante networks. Find missing devices, fix clock sync and audio dropouts — 40 minutes before doors.">
 <meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://dante.brandon-lopez.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dante Troubleshooter">
+<meta property="og:title" content="Dante Troubleshooter — The panic button for Dante networks">
+<meta property="og:description" content="Find missing Dante devices, fix clock sync, stop audio dropouts. Real diagnostics plus field knowledge for Yamaha, Allen &amp; Heath, DiGiCo, d&amp;b and more.">
+<meta property="og:url" content="https://dante.brandon-lopez.com/">
+<meta property="og:image" content="https://dante.brandon-lopez.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dante Troubleshooter — The panic button for Dante networks">
+<meta name="twitter:description" content="Find missing devices, fix clock sync, stop audio dropouts. Guided troubleshooting for Dante networks.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Dante Troubleshooter",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "macOS 12+, Apple Silicon",
+  "description": "Guided troubleshooting and real network diagnostics for Dante audio networks, with baked-in field knowledge for Yamaha, Allen & Heath, DiGiCo, d&b audiotechnik and NEXO.",
+  "url": "https://dante.brandon-lopez.com/",
+  "downloadUrl": "https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "Brandon Lopez", "url": "https://itsbrandonlopez.github.io/personal-site/" }
+}
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='14' fill='%2338bdf8' text-anchor='middle'%3EDT%3C/text%3E%3C/svg%3E">
 <style>
   :root {
@@ -230,6 +256,7 @@
   @media (max-width: 640px) {
     .wrap { width: min(100% - 40px, 1400px); }
     .step { grid-template-columns: 1fr; gap: 8px; padding: 22px 14px; }
+    .topbar nav { display: none; }
   }
 
   /* ---------- fine print / footer ---------- */
@@ -260,12 +287,17 @@
 
 <header class="hero wrap">
   <div class="topbar">
-    <span class="label">Dante Troubleshooter</span>
-    <a class="label" href="https://itsbrandonlopez.github.io/personal-site/">Brandon Lopez</a>
+    <a class="label" href="/">Dante Troubleshooter</a>
+    <nav class="label" style="display:flex; align-items:center; gap:24px;">
+      <a href="/gear/">Gear coverage</a>
+      <a href="/faq/">FAQ</a>
+      <span style="width:1px; height:14px; background:var(--hairline);"></span>
+      <a href="https://itsbrandonlopez.github.io/personal-site/">Made by Brandon</a>
+    </nav>
   </div>
   <h1>The panic button for <em>Dante</em> networks.</h1>
   <div class="sub">
-    <p>Guided troubleshooting and real network diagnostics for the moment everything goes quiet 40 minutes before doors. No decision-tree flowchart. No "consult your administrator." Just: here's what we found, here's what it means, here's your next move.</p>
+    <p>Guided troubleshooting and real network diagnostics for the moment everything goes quiet 40 minutes before doors. Missing devices, broken clocking, mystery dropouts — diagnosed in minutes. No decision-tree flowchart. No "consult your administrator." Just: here's what we found, here's what it means, here's your next move.</p>
     <a class="cta" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg" download>Download for Mac</a>
   </div>
 </header>
@@ -338,6 +370,8 @@
       <ul>
         <li>A1s and system techs who know what a subnet mask is but don't want to derive it under pressure</li>
         <li>The junior tech you handed the network to, who needs the why explained without condescension</li>
+        <li>Church tech directors running a network one volunteer at a time</li>
+        <li>The installer commissioning a room at 6 a.m. with the client watching</li>
         <li>Anyone who has ever power-cycled a stage rack at intermission and prayed</li>
       </ul>
     </div>
@@ -362,17 +396,15 @@
     <div class="step"><p>First launch: macOS will complain we're unsigned — like all the best touring crews. Right-click → Open → Open, or approve via System Settings → Privacy &amp; Security → <strong>Open Anyway</strong>. One time only.</p></div>
     <div class="step"><p><strong>Plug into the network</strong> and pick your symptom. Doors are in 40 minutes. You've got this.</p></div>
   </div>
-  <p class="fine">Dante Troubleshooter is an independent tool and is not affiliated with, endorsed by, or sponsored by Audinate, Yamaha, Allen &amp; Heath, DiGiCo, d&amp;B audiotechnik, NEXO, or anyone else whose gear has ever ruined your day. Dante is a trademark of Audinate Pty Ltd. Your switch's IGMP snooping misconfiguration is not our fault — but it is now diagnosable.</p>
+  <p class="fine">Dante Troubleshooter is an independent tool and is not affiliated with, endorsed by, or sponsored by Audinate, Yamaha, Allen &amp; Heath, DiGiCo, d&amp;b audiotechnik, NEXO, or anyone else whose gear has ever ruined your day. Dante is a trademark of Audinate Pty Ltd. Your switch's IGMP snooping misconfiguration is not our fault — but it is now diagnosable.</p>
 </section>
 
 <footer class="wrap">
   <div class="foot-row">
-    <span class="label">&copy; 2026 Brandon Lopez</span>
+    <span class="label">Dante Troubleshooter &middot; &copy; 2026 Brandon Lopez</span>
     <div class="links">
       <a class="label" href="https://venmo.com/itsbrandonlopez" target="_blank" rel="noopener">Tip jar &middot; Venmo</a>
       <a class="label" href="mailto:hi@brandon-lopez.com?subject=Dante%20Troubleshooter">hi@brandon-lopez.com</a>
-      <a class="label" href="https://github.com/itsbrandonlopez/dante-troubleshooter">GitHub</a>
-      <a class="label" href="https://itsbrandonlopez.github.io/personal-site/">Home</a>
     </div>
   </div>
 </footer>

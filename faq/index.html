@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dante Troubleshooting FAQ — Missing Devices, Dropouts &amp; Clock Sync</title>
+<meta name="description" content="Straight answers to the Dante problems that eat your day: devices not showing up, audio dropouts, clock sync errors, shared redundant switches — and when to stop guessing.">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://dante.brandon-lopez.com/faq/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dante Troubleshooter">
+<meta property="og:title" content="Dante Troubleshooting FAQ">
+<meta property="og:description" content="Straight answers to the Dante problems that eat your day: missing devices, dropouts, clock sync errors.">
+<meta property="og:url" content="https://dante.brandon-lopez.com/faq/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dante Troubleshooting FAQ">
+<meta name="twitter:description" content="Straight answers to the Dante problems that eat your day: missing devices, dropouts, clock sync errors.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why can't I see my Dante devices in Dante Controller?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Discovery is multicast, so this is almost always a network problem, not a gear problem: misconfigured IGMP snooping, devices on a different VLAN or subnet than your machine, a link-local 169.254.x.x address that never got a DHCP lease, or a Wi-Fi/VPN interface isolating your laptop from the Dante VLAN." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does my Dante audio drop out randomly or click and pop?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Clicks and pops are almost always a clocking problem, not a network congestion problem. Two devices fighting to be leader, a console synced to internal while the card expects external (or vice versa), sample rate mismatches, or PTP not surviving the switch fabric." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is my Yamaha console fighting me on Dante clocking?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yamaha CL/QL consoles default to internal clock and use Console IDs that don't always match what you'd expect on the Dante side. If the desk is set to internal while something else is leader, you'll get intermittent clicks and pops rather than a clean failure." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can primary and secondary Dante networks share one switch?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Primary and secondary are meant to be physically separate networks. Sharing one switch means one IGMP misconfiguration takes out both paths at once — exactly what redundancy exists to prevent." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why don't my d&b amps show up on the Dante network?",
+      "acceptedAnswer": { "@type": "Answer", "text": "With a d&b DS100 system, amps behind the failsafe/monitoring layer may never appear as Dante endpoints even when everything is working. The DS100's status LEDs tell a different story than Dante Controller does." }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I still need Dante Controller if I have Dante Troubleshooter?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Dante Controller is free and it's where you route audio and watch clock status live. Dante Troubleshooter complements it: faster discovery scans, isolation checks, subnet comparison, guided walkthroughs, and manufacturer quirks baked in." }
+    }
+  ]
+}
+</script>
+
+<style>
+  :root {
+    --bg: #000;
+    --ink: #fff;
+    --muted: rgba(255, 255, 255, 0.62);
+    --faint: rgba(255, 255, 255, 0.4);
+    --hairline: rgba(255, 255, 255, 0.28);
+    --accent: #38bdf8;
+    --mono: ui-monospace, "SF Mono", Menlo, Monaco, "Courier New", monospace;
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent); color: #000; }
+  a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .wrap {
+    width: min(100% - clamp(48px, 9vw, 160px), 1400px);
+    margin-inline: auto;
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+
+  header.hero { min-height: 46svh; display: flex; flex-direction: column; padding-block: 28px 36px; }
+
+  .topbar { display: flex; justify-content: space-between; align-items: baseline; }
+  .topbar nav { display: flex; gap: 24px; }
+  .topbar a:hover { color: var(--accent); }
+
+  .hero h1 {
+    margin: auto 0;
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+    max-width: 20ch;
+  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p.sub {
+    max-width: 560px;
+    margin-top: 28px;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .faq-list { border-top: 1px solid var(--hairline); margin-top: 48px; }
+
+  .qa { padding: 34px 20px; border-bottom: 1px solid var(--hairline); max-width: 900px; }
+  .qa h2 {
+    font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+  .qa p { font-size: 1rem; line-height: 1.6; color: var(--muted); margin-bottom: 12px; }
+  .qa p:last-child { margin-bottom: 0; }
+  .qa p strong { color: var(--ink); font-weight: 500; }
+  .qa code { font-family: var(--mono); font-size: 0.85em; color: var(--ink); }
+
+  .cta {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 16px 26px;
+    background: var(--accent);
+    color: #000;
+    transition: transform 0.15s ease;
+    white-space: nowrap;
+  }
+  .cta:hover { transform: translateY(-2px); }
+  .cta::after { content: "\2193"; margin-left: 10px; }
+
+  .endnote { margin-top: 56px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .endnote p { max-width: 520px; font-size: 0.95rem; line-height: 1.55; color: var(--muted); }
+
+  footer { padding-block: 64px 40px; }
+  .foot-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+    flex-wrap: wrap;
+  }
+  .foot-row .links { display: flex; gap: 24px; }
+  .foot-row a:hover { color: var(--accent); }
+
+  @media (max-width: 800px) {
+    .topbar nav { display: none; }
+    .qa { padding: 26px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero wrap">
+  <div class="topbar">
+    <a class="label" href="/">Dante Troubleshooter</a>
+    <nav class="label" style="align-items:center;">
+      <a href="/gear/">Gear coverage</a>
+      <span style="width:1px; height:14px; background:var(--hairline);"></span>
+      <a href="https://itsbrandonlopez.github.io/personal-site/">Made by Brandon</a>
+    </nav>
+  </div>
+  <h1>Dante problems, <em>answered.</em></h1>
+  <p class="sub">The questions every tech asks under pressure, answered straight. No forum spelunking required.</p>
+</header>
+
+<main class="wrap" aria-label="Frequently asked questions">
+  <div class="faq-list">
+
+    <div class="qa">
+      <h2>Why can't I see my Dante devices in Dante Controller?</h2>
+      <p>Discovery runs on multicast, so this is almost always a <strong>network problem wearing a gear costume</strong>. In order of likelihood:</p>
+      <p><strong>IGMP snooping misconfigured</strong> on one of the switches — the most common culprit by a wide margin. <strong>VLAN mismatch</strong>: mDNS doesn't cross VLANs, so if your laptop landed on the office VLAN while the stageboxes live on the Dante VLAN, you're invisible to each other. <strong>Link-local limbo</strong>: a device stuck on a 169.254.x.x address never got a DHCP lease. <strong>Isolation</strong>: Wi-Fi client isolation, a VPN, or a dual-homed machine quietly pulling your controller off the network you meant to be on.</p>
+      <p>The fix starts with knowing which of those it is — which is what the subnet scan and isolation check are for.</p>
+    </div>
+
+    <div class="qa">
+      <h2>Why does my Dante audio drop out randomly — clicks and pops?</h2>
+      <p>Clicks and pops are almost always a <strong>clocking problem</strong>, not a bandwidth problem. Two devices both convinced they're the leader. A console synced to internal while its Dante card expects external (or the reverse). A sample rate mismatch nobody noticed until the second act. Or PTP traffic not surviving the switch fabric because flow control, QoS, or spanning-tree settings were left at factory defaults.</p>
+      <p>The annoying part: it usually sounds fine until it isn't. The diagnostics log timestamps precisely so you can correlate the dropouts with what changed.</p>
+    </div>
+
+    <div class="qa">
+      <h2>Why is my Yamaha console fighting me on clocking?</h2>
+      <p>CL/QL desks ship with opinions. They default to internal clock, and the Console ID situation doesn't always line up with what Dante Controller shows you. The result is the classic intermittent click instead of a clean, obvious failure — the worst kind of problem to chase during changeover.</p>
+      <p>The walkthrough covers the defaults, the IDs, and which box should be telling whom what time it is.</p>
+    </div>
+
+    <div class="qa">
+      <h2>Can primary and secondary Dante networks share one switch?</h2>
+      <p>No. We get why it's tempting — one switch, two VLANs, half the hardware budget. But primary and secondary exist so a single point of failure can't take down both paths. Share a switch and <strong>one IGMP misconfiguration takes out primary and secondary simultaneously</strong>, ideally mid-show.</p>
+      <p>This scenario has its own guided walkthrough, because someone will try it anyway.</p>
+    </div>
+
+    <div class="qa">
+      <h2>Why don't my d&amp;b amps show up on the Dante network?</h2>
+      <p>With a DS100-based system, amplifiers behind the failsafe/monitoring layer can be perfectly healthy and still never appear as Dante endpoints. The DS100's status LEDs are the source of truth there, and they tell a different story than Dante Controller does.</p>
+      <p>If you didn't know that, you've probably replaced an amp that was fine. It's okay. It happens to everyone once.</p>
+    </div>
+
+    <div class="qa">
+      <h2>Do I still need Dante Controller if I have Dante Troubleshooter?</h2>
+      <p>Yes — and we're not going to pretend otherwise. Dante Controller is free, it's excellent at routing, and nothing else shows you live clock status the way it does.</p>
+      <p>Dante Troubleshooter picks up where it stops: full subnet scans in seconds, honest ping and UDP probes, isolation checks, subnet comparison, guided fixes that explain the <em>why</em>, and the manufacturer quirks that never make it into the manual. Route with Controller. Diagnose with us.</p>
+    </div>
+
+  </div>
+
+  <div class="endnote">
+    <p>Six failure modes, forty-eight screens, and the field knowledge to back them up. Doors are in 40 minutes.</p>
+    <a class="cta" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg" download>Download for Mac</a>
+  </div>
+</main>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <span class="label">Dante Troubleshooter &middot; &copy; 2026 Brandon Lopez</span>
+    <div class="links">
+      <a class="label" href="mailto:hi@brandon-lopez.com?subject=Dante%20Troubleshooter">hi@brandon-lopez.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
