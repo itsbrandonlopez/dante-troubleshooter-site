@@ -162,7 +162,7 @@
     <a class="label" href="/">Dante Troubleshooter</a>
     <nav class="label">
       <a href="/gear/">Gear coverage</a>
-      <a href="/changelog/">Changelog</a>
+      <a href="/faq/">FAQ</a>
       <span class="nav-divider"></span>
       <a href="https://itsbrandonlopez.github.io/personal-site/">Made by Brandon</a>
     </nav>
@@ -173,6 +173,38 @@
 
 <main class="wrap" aria-label="Release history">
   <div class="releases">
+<article class="release">
+  <div class="release-head"><h2>v0.4.0</h2><time datetime="2026-08-25T19:24:04Z">Aug 25, 2026</time></div>
+  <div class="release-body">
+<h3>Added</h3>
+<ul>
+<li>The update toast now has a &quot;What's new in vN.N.N&quot; expander showing the release notes for the version you're about to install</li>
+<li>App version number displayed under the sidebar credit (&quot;Made by Brandon Lopez&quot;)</li>
+<li><strong>Yamaha I/O rack knowledge base</strong> (&quot;Can't see Dante devices&quot; → no-devices screen), covering the whole Tio/Rio/Ri family:</li>
+<li>Generation split first: Tio1608-D and older Rio3224-D / Rio1608-D / Ri8-D are configured by physical DIP switches, while the newer Rio-D2/D3 racks have NO functional rear DIPs (unassigned &quot;future expansion&quot;) — their UNIT ID lives in the front-panel SETUP menu</li>
+<li>Full Tio1608-D switch map: unit ID, initialize, SECONDARY port mode (redundant vs daisy-chain), control-IP mode, refresh/resume startup</li>
+<li>The power-off rule: DIPs are read only at power-on; changes made while running are silently ignored</li>
+<li>Quick Config trap: auto-patch mode forces daisy-chain wiring — redundancy requires QC OFF + DIP 4 down</li>
+<li>Older Rio/Ri: rear DIP bank + front UNIT ID rotary interaction, INITIALIZE dip, leftover-tour-ID diagnosis, static-IP workflow via R Remote/Dante Controller</li>
+<li><strong>Yamaha consoles patch Dante directly on the board</strong> (&quot;Routing and audio problems&quot; → downstream screen): CL/QL/DM/TF PATCH pages assign DANTE ports like local I/O — check input patch before blaming the network; scope caveat for device-to-device routes; TF + Tio Quick Config patches follow the rack's unit ID</li>
+<li>Clock-sync Yamaha note: Tio1608-D boot personality (refresh vs resume) explains racks waking with stale head-amp gains/patch</li>
+<li><strong>Windows guidance throughout the troubleshooting flows</strong>: firewall and static-IP screens now cover Windows paths (Defender allow-rules, Public-network classification trap), DVS microphone-permission steps cover both OSes, and Mac-specific copy is now platform-neutral</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li><strong>Update toast no longer fights you</strong>: dismissing it during a download sticks; failed downloads show a retryable error instead of vanishing or hanging at &quot;Downloading&hellip;&quot;</li>
+<li><strong>Vendor identification on macOS fixed</strong>: ARP MAC addresses are zero-padded before OUI lookup, so vendors (Yamaha, Shure, Audinate&hellip;) display correctly for adapters like <code>4:11:22:&hellip;</code></li>
+<li>Ping parsing on Windows survives locales that translate &quot;TTL&quot;; clicking during a slow check can no longer corrupt results or navigation</li>
+<li>A stale saved interface (unplugged adapter, changed network) is cleared on Dashboard refresh instead of silently pinging dead addresses</li>
+<li>Scenario picker shows a loading state instead of a blank grid while scenarios load</li>
+</ul>
+<h3>Changed</h3>
+<ul>
+<li>Troubleshooting scenarios now load on demand when opened from the picker — smaller app bundle, faster startup</li>
+<li>Hardened app shell: external links restricted to known URLs, in-window navigation locked down, malformed mDNS traffic can't take the main process down</li>
+</ul>
+  </div>
+</article>
 <article class="release">
   <div class="release-head"><h2>v0.3.0</h2><time datetime="2026-08-25T17:58:51Z">Aug 25, 2026</time></div>
   <div class="release-body">
@@ -201,13 +233,29 @@
 <article class="release">
   <div class="release-head"><h2>v0.1.1</h2><time datetime="2026-08-25T00:01:16Z">Aug 25, 2026</time></div>
   <div class="release-body">
-<p>New: switch and device knowledge base — Netgear, Cisco, UniFi, Yamaha, Luminex, Q-SYS, Midas, Shure.</p>
+<h3>Added</h3>
+<ul>
+<li><strong>Switch knowledge base</strong> on the &quot;Switch configuration&quot; screen, expanding the IGMP/querier guidance with per-manufacturer field notes:</li>
+<li><strong>Netgear</strong> — model-suffix trap (not every &quot;smart&quot; model does real IGMP snooping) and Block Unknown Multicast setting</li>
+<li><strong>Cisco</strong> — Small Business vs Catalyst configuration paths and DSCP trust behavior on uplinks</li>
+<li><strong>UniFi</strong> — full Dante-appropriate settings require Pro-series gear; lower tiers silently lack the needed controls</li>
+<li><strong>Yamaha</strong> — SWP1 series purpose-built DIP-switch &quot;Dante preset&quot; (QoS/multicast preconfigured)</li>
+<li><strong>Luminex</strong> — GigaCore Dante profiles and PTP filtering defaults</li>
+<li><strong>Q-SYS</strong> — core/peripheral switching guidance for Dante networks</li>
+<li><strong>Device knowledge base</strong> on the discovery screen: <strong>Midas / Behringer</strong> (DN32-Dante card gotchas) and <strong>Shure</strong> (port strictness at 100 Mbps/EEE, AES256 encryption mismatch masquerading as dead devices)</li>
+</ul>
   </div>
 </article>
 <article class="release">
   <div class="release-head"><h2>v0.1.0</h2><time datetime="2026-08-24T23:27:42Z">Aug 24, 2026</time></div>
   <div class="release-body">
-<p>First public release. Free to use — tips appreciated.</p>
+<h3>Added</h3>
+<ul>
+<li><strong>macOS builds are now signed and notarized by Apple</strong> — first launch opens normally instead of requiring the right-click → Open workaround</li>
+<li>Sidebar credit (&quot;Made by Brandon Lopez&quot;) linking to the developer site</li>
+<li>Tip link at the end of every session report</li>
+<li>Links now open in your default browser instead of inside the app</li>
+</ul>
   </div>
 </article>
   </div>
@@ -217,7 +265,7 @@
   <div class="foot-row">
     <span class="label">Dante Troubleshooter &middot; &copy; 2026 Brandon Lopez</span>
     <div class="links">
-      <a class="label" href="https://buttondown.com/itsbrandonlopez">Newsletter</a>
+      <a class="label" href="https://buttondown.com/itsbrandonlopez">Release updates</a>
       <a class="label" href="mailto:hi@brandon-lopez.com?subject=Dante%20Troubleshooter">hi@brandon-lopez.com</a>
     </div>
   </div>
