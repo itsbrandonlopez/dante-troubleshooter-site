@@ -24,7 +24,7 @@
   "@type": "SoftwareApplication",
   "name": "Dante Troubleshooter",
   "applicationCategory": "MultimediaApplication",
-  "operatingSystem": "macOS 12+, Apple Silicon",
+  "operatingSystem": "macOS 12+, Windows 10/11",
   "description": "Guided troubleshooting and real network diagnostics for Dante audio networks, with baked-in field knowledge for Yamaha, Allen & Heath, DiGiCo, d&b audiotechnik and NEXO.",
   "url": "https://dante.brandon-lopez.com/",
   "downloadUrl": "https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg",
@@ -342,7 +342,7 @@
     <a class="label" href="/">Dante Troubleshooter</a>
     <nav class="label">
       <a href="/gear/">Gear coverage</a>
-      <a href="/faq/">FAQ</a>
+      <a href="/changelog/">Changelog</a>
       <span class="nav-divider"></span>
       <a href="https://itsbrandonlopez.github.io/personal-site/">Made by Brandon</a>
     </nav>
@@ -353,8 +353,9 @@
     <div class="cta-block">
       <span class="label">Current release &middot; v0.3.0</span>
       <div class="cta-row">
-        <a class="cta" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg" download>Download for Mac</a>
-        <a class="cta-alt" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-x64.dmg" download>Intel Mac</a>
+        <a class="cta" data-dl="mac-arm" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-arm64.dmg" download>Download for Mac</a>
+        <a class="cta-alt" data-dl="mac-intel" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-mac-x64.dmg" download>Intel Mac</a>
+        <a class="cta-alt" data-dl="win" href="https://github.com/itsbrandonlopez/dante-troubleshooter-site/releases/latest/download/Dante-Troubleshooter-windows-x64.exe" download>Windows</a>
       </div>
       <a class="signup" href="https://buttondown.com/itsbrandonlopez">Get an email when a new release ships &mdash; nothing else, ever.</a>
     </div>
@@ -447,12 +448,14 @@
 <section class="wrap" aria-labelledby="install-h">
   <div class="section-head">
     <h2 id="install-h">Install.</h2>
-    <p>Apple Silicon Mac, macOS 12 or later.</p>
+    <p>macOS 12 or later (Apple Silicon or Intel) &middot; Windows 10/11 x64.</p>
   </div>
   <div class="steps">
-    <div class="step"><p><strong>Grab the DMG</strong> — the Download button up top always has the latest version.</p></div>
-    <div class="step"><p>Unzip and drag <strong>Dante Troubleshooter.app</strong> to Applications.</p></div>
-    <div class="step"><p>First launch: macOS will complain we're unsigned — like all the best touring crews. Right-click → Open → Open, or approve via System Settings → Privacy &amp; Security → <strong>Open Anyway</strong>. One time only.</p></div>
+    <div class="step"><p><strong>Grab the installer</strong> — the buttons up top always have the latest version.</p></div>
+    <div class="step" data-os="mac"><p>Unzip and drag <strong>Dante Troubleshooter.app</strong> to Applications.</p></div>
+    <div class="step" data-os="win"><p>Run the installer and follow the prompts.</p></div>
+    <div class="step" data-os="mac"><p><strong>First launch:</strong> macOS will complain we're unsigned — like all the best touring crews. Right-click → Open → Open, or approve via System Settings → Privacy &amp; Security → <strong>Open Anyway</strong>. One time only.</p></div>
+    <div class="step" data-os="win"><p><strong>First launch:</strong> SmartScreen will wave you down — <strong>More info</strong> → <strong>Run anyway</strong>. One time only.</p></div>
     <div class="step"><p><strong>Plug into the network</strong> and pick your symptom. Doors are in 40 minutes. You've got this.</p></div>
   </div>
   <p class="fine">Dante Troubleshooter is an independent tool and is not affiliated with, endorsed by, or sponsored by Audinate, Yamaha, Allen &amp; Heath, DiGiCo, d&amp;b audiotechnik, NEXO, or anyone else whose gear has ever ruined your day. Dante is a trademark of Audinate Pty Ltd. Your switch's IGMP snooping misconfiguration is not our fault — but it is now diagnosable.</p>
@@ -462,13 +465,13 @@
   <div class="foot-row">
     <span class="label">Dante Troubleshooter &middot; &copy; 2026 Brandon Lopez</span>
     <div class="links">
-      <a class="label" href="/changelog/">Changelog</a>
-      <a class="label" href="https://buttondown.com/itsbrandonlopez">Release updates</a>
+      <a class="label" href="https://buttondown.com/itsbrandonlopez">Newsletter</a>
       <a class="label" href="https://venmo.com/itsbrandonlopez" target="_blank" rel="noopener">Tip jar &middot; Venmo</a>
       <a class="label" href="mailto:hi@brandon-lopez.com?subject=Dante%20Troubleshooter">hi@brandon-lopez.com</a>
     </div>
   </div>
 </footer>
 
+<script src="/dl.js"></script>
 </body>
 </html>
