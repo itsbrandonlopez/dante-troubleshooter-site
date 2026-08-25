@@ -5,7 +5,7 @@
 
   document.querySelectorAll('a[data-dl]').forEach(function (a) {
     var kind = a.dataset.dl;
-    if (kind === 'win') {
+    if (kind === 'win' && isWin) {
       a.classList.remove('cta-alt');
       a.classList.add('cta');
       a.textContent = 'Download for Windows';
