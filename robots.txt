@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dante.brandon-lopez.com/sitemap.xml
+Sitemap: https://dantetroubleshooter.com/sitemap.xml

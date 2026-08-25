@@ -18,7 +18,7 @@ from pathlib import Path
 
 REPO = "itsbrandonlopez/dante-troubleshooter-site"
 API = f"https://api.github.com/repos/{REPO}/releases?per_page=30"
-SITE_URL = "https://dante.brandon-lopez.com/changelog/"
+SITE_URL = "https://dantetroubleshooter.com/changelog/"
 OUT = Path(__file__).resolve().parent.parent / "changelog" / "index.html"
 INDEX = Path(__file__).resolve().parent.parent / "index.html"
 
@@ -135,13 +135,13 @@ TEMPLATE = """<!DOCTYPE html>
 <title>Changelog — Dante Troubleshooter Release Notes</title>
 <meta name="description" content="Every Dante Troubleshooter release, straight from GitHub: new walkthroughs, diagnostics, and gear knowledge base updates.">
 <meta name="theme-color" content="#000000">
-<link rel="canonical" href="https://dante.brandon-lopez.com/changelog/">
+<link rel="canonical" href="https://dantetroubleshooter.com/changelog/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Dante Troubleshooter">
 <meta property="og:title" content="Dante Troubleshooter Changelog">
 <meta property="og:description" content="Every release, straight from GitHub. New walkthroughs, diagnostics, and gear knowledge with each version.">
-<meta property="og:url" content="https://dante.brandon-lopez.com/changelog/">
+<meta property="og:url" content="https://dantetroubleshooter.com/changelog/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dante Troubleshooter Changelog">
 <meta name="twitter:description" content="Every release, straight from GitHub.">
